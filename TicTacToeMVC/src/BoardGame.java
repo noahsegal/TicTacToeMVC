@@ -29,7 +29,8 @@ public abstract class BoardGame extends Observable {
                 grid[i][j] = '_';
             }
         }
-        strategy = new FirstAvailableMove();
+        //strategy = new FirstAvailableMove();
+        strategy = new GreedyMove();
         turn = 'x';
     }
     
@@ -129,6 +130,19 @@ public abstract class BoardGame extends Observable {
         }
         catch (Exception e) {return null;}
         return new Move(row,col);
+    }
+    
+    
+    /**
+     * Clear the board and start a new game (starting with X)
+     */
+    protected void newGame() {
+    	 for (int i = 0; i < grid.length; i++) {
+             for (int j = 0; j < grid.length; j++) {
+                 grid[i][j] = '_';
+             }
+         }
+    	 turn = 'x';
     }
     
     public String toString() {
