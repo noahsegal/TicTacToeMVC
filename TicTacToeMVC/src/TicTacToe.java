@@ -46,10 +46,8 @@ public class TicTacToe extends BoardGame {
             if (turn == 'x') return X_WON;
             else return O_WON;
         }
-        
         if (checkTie()) return TIE;
         
-        toggleTurn();
         return ONGOING;
     }
     
