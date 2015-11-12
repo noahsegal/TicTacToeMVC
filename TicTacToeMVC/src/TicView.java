@@ -12,9 +12,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 
-public class TicTacToeView implements Observer {
+public class TicView implements Observer {
 
-	private static final int size = 3;
+	private static final int SIZE = 3;
 	
 	private JFrame gameFrame;
 	private JPanel gamePanel;
@@ -31,12 +31,12 @@ public class TicTacToeView implements Observer {
 	 * Set up the GUI
 	 * @param controller
 	 */
-	public TicTacToeView(TicTacToeController controller) {
+	public TicView(TicController controller) {
 		gameFrame = new JFrame();
 		gamePanel = new JPanel();
 		gameLabel = new JLabel("TicTacToe: X vs. O");
 		
-		gameButtons = new JButton[size][size];
+		gameButtons = new JButton[SIZE][SIZE];
 		newGameButton = new JButton("New Game");
 		newGameButton.addActionListener(controller);
 		
@@ -52,9 +52,9 @@ public class TicTacToeView implements Observer {
 		menuBar.add(strategyMenu);
 		menuBar.add(strategyName);
 		
-		gamePanel.setLayout(new GridLayout(size, size));
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		gamePanel.setLayout(new GridLayout(SIZE, SIZE));
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				gameButtons[i][j] = new JButton();
 				gamePanel.add( gameButtons[i][j] );
 				gameButtons[i][j].addActionListener(controller);
@@ -73,6 +73,7 @@ public class TicTacToeView implements Observer {
 		gameFrame.getContentPane().add(newGameButton, BorderLayout.NORTH);
 		gameFrame.getContentPane().add(gameLabel, BorderLayout.SOUTH);
 		
+		//gameFrame.pack();
 		gameFrame.setVisible(true);
 	}
 	
@@ -82,8 +83,8 @@ public class TicTacToeView implements Observer {
 	 * @return
 	 */
 	public Move getButtonLocation(JButton buttonSelect) {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				if ( gameButtons[i][j] == buttonSelect ) return new Move(i, j);
 			}
 		}
@@ -95,8 +96,8 @@ public class TicTacToeView implements Observer {
 	 * @param textResult
 	 */
 	public void endGame(String textResult) {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				gameButtons[i][j].setEnabled(false);
 			}
 		}
@@ -107,21 +108,22 @@ public class TicTacToeView implements Observer {
 	 * Clear the board of all pieces (reset the board)
 	 */
 	public void newGame() {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				gameButtons[i][j].setEnabled(true);
 				gameButtons[i][j].setText("");
 			}
 		}
+		gameLabel.setText("New Game: X vs. O");
 	}
 	
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		char [][] grid = ( char[][] ) arg;
+		char[][] grid = ( char[][] ) arg;
 		
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				if ( grid[i][j] == '_') gameButtons[i][j].setText("");
 				else gameButtons[i][j].setText( grid[i][j] + "" );
 			}

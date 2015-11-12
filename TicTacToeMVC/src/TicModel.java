@@ -7,15 +7,15 @@
  
 import java.util.*;
 
-public class TicTacToe extends BoardGame {
+public class TicModel extends BoardGame {
     public static int SIZE = 3;
 
 
-    public TicTacToe(int size) {
+    public TicModel(int size) {
         super(size, new GreedyMove());
     }
     
-    public TicTacToe(TicTacToe copyGame) {
+    public TicModel(TicModel copyGame) {
     	super(copyGame);
     }
     
@@ -53,7 +53,7 @@ public class TicTacToe extends BoardGame {
     
     protected int evaluateMove(Move possibleMove)
     {
-    	 TicTacToe gameCopy = new TicTacToe(this);
+    	 TicModel gameCopy = new TicModel(this);
     	 switch (gameCopy.play(possibleMove))
  		{
  			case X_WON:
@@ -155,6 +155,6 @@ public class TicTacToe extends BoardGame {
     }
     
     public static void main(String[] args) {
-        (new TicTacToe(SIZE)).loop();
+        (new TicModel(SIZE)).loop();
     }
 }

@@ -4,29 +4,29 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 
-public class TicTacToeController implements ActionListener {
+public class TicController implements ActionListener {
 
-	private TicTacToe model;
-	private TicTacToeView view;
+	private TicModel model;
+	private TicView view;
 	private int modelState;
 	
-	public TicTacToeController() {
-		model = new TicTacToe(3);
-		view = new TicTacToeView(this);
+	public TicController() {
+		model = new TicModel(TicModel.SIZE);
+		view = new TicView(this);
 		model.addObserver(view);	
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// Start a new game
+		// Handle Button: Start a new game
 		if (e.getSource() == view.newGameButton) {
 			model.newGame();
 			view.newGame();
 			if (model.getTurn() == 'o') model.toggleTurn();
 		}
 
-		// Change the CPU strategy
+		// Handle Button: Change the CPU strategy
 		else if (e.getSource() == view.greedy) {
 			model.setMoveStrategy(new GreedyMove());
 			view.strategyName.setText("Greedy");
@@ -36,7 +36,7 @@ public class TicTacToeController implements ActionListener {
 			view.strategyName.setText("First Available");
 		}
 
-		// Take a turn
+		// Handle Button: Take a turn
 		else {
 			JButton buttonSelected = (JButton) e.getSource();
 
@@ -44,8 +44,8 @@ public class TicTacToeController implements ActionListener {
 			if (modelState == BoardGame.ONGOING) {
 				model.toggleTurn();
 				modelState = model.machinePlay();
+				model.toggleTurn();
 			}
-			model.toggleTurn();
 			isGameOver(modelState);
 		}
 	}
@@ -72,7 +72,7 @@ public class TicTacToeController implements ActionListener {
 	
 	
 	public static void main( String[] args ) {
-		TicTacToeController controller = new TicTacToeController();
+		TicController controller = new TicController();
 	}
 
 }
